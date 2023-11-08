@@ -4,14 +4,14 @@ import webbrowser
 import os
 import requests  # Import the requests library for making HTTP requests
 import datetime
-from config import apikey  # Assuming you have your API key in the 'config' module.
+from config import apikey
 import openai
-import threading  # Import the threading module
+import threading
 
 # Initialize the chatStr variable to store conversation history
 chatStr = ""
 
-# Replace with your ESP32's IP address
+# Replace with ESP32's IP address
 ESP32_IP = "192.168.100.114"
 
 
@@ -91,17 +91,20 @@ def control_relays(relay, action):
 if __name__ == "__main__":
     speak("Hello, I am JARVIS, your AI Home assistant. How can I assist you today?")
 
-    while True:
-        print("Enter the word you want to say or say 'stop' to exit:")
-        user_input = input()
-        if user_input.lower() == "stop":
-            break
+    # while True:
+    #     print("Enter the word you want to say or say 'stop' to exit:")
+    #     user_input = input()
+    #     if user_input.lower() == "stop":
+    #         break
 
     print("Listening for commands...")
     while True:
         command = takeCommand().lower()
         if "exit" in command:
             speak("Exiting...")
+            break
+        if "goodbye" in command:
+            speak("goodbye sir")
             break
         elif "open" in command:
             if "youtube" in command:
@@ -113,7 +116,7 @@ if __name__ == "__main__":
             elif "google" in command:
                 speak("Opening instagram Sir")
                 webbrowser.open("https://www.google.com")
-            elif "play music" in command:
+            elif " music" in command:
                 # Specify the correct path to the music file
                 musicPath = r"C:\Users\lenovo\Desktop\music.mp3"
                 os.startfile(musicPath)
@@ -124,6 +127,8 @@ if __name__ == "__main__":
         elif "time" in command:
             strfTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f"Sir, the time is {strfTime}")
+        elif "who made you" in command:
+            speak("Mr. Sahil made me")
         elif "bulb" in command:
             if "on" in command:
                 if "1" in command:
